@@ -191,6 +191,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           passed = history.some(h => h.includes('|'));
           break;
         }
+        case 'user_is': {
+          if (obj.testExpected) {
+            passed = vfs.getCurrentUser() === obj.testExpected;
+          }
+          break;
+        }
         default:
           passed = false;
       }

@@ -15,26 +15,33 @@ export const LINUX_COURSE: Course = {
         {
           id: 'les-1-1',
           moduleId: 'mod-1',
-          title: 'Mission 1: The Crime Scene (pwd & ls)',
+          title: 'Mission 1: The Crime Scene (pwd & ls -la)',
           slug: 'crime-scene-pwd-ls',
           xpReward: 50,
           difficulty: 'Beginner',
           estimatedMinutes: 5,
-          story: '🚨 Priority Alert from WorldBanc InfoSec: Anomalous network activity was detected on node tuxquest-node-1. You have logged into the terminal as user. Determine where you are in the filesystem and list the contents of your directory.',
+          story: '🚨 Priority Alert from WorldBanc InfoSec: Anomalous network activity was detected on banking node worldbanc-sec-01. You have logged into the terminal as user. Determine where you are in the filesystem and reveal all files including hidden dotfiles.',
           content: `### Welcome to the Command Line
 
-In Linux, you are not clicking icons with a mouse. You interact directly with the shell via commands.
+In Linux, you interact directly with the kernel and utilities via the shell.
 
-- \`pwd\` (**P**rint **W**orking **D**irectory): Outputs the absolute path of your current location.
+- \`pwd\` (**P**rint **W**orking **D**irectory): Outputs the absolute path of your current working directory.
 - \`ls\` (**L**i**s**t): Displays files and folders in the current directory.
-- \`ls -la\`: Shows all files including hidden ones (starting with a dot \`.\`) alongside permissions, owner, and sizes.
+- \`ls -la\`: Flags can be combined!
+  - \`-l\`: Use long listing format (file permissions, owner, size, date).
+  - \`-a\`: Include hidden files (names starting with a dot \`.\`, such as \`.bashrc\`).
+
+\`\`\`bash
+pwd
+ls -la
+\`\`\`
 
 ### Your Objectives:
-1. Run \`pwd\` to identify your current working directory.
-2. Run \`ls\` to view files in the current folder.`,
+1. Run \`pwd\` to identify your location.
+2. Run \`ls -la\` to uncover hidden dotfiles and file permissions.`,
           tips: [
-            'Type "pwd" and hit Enter.',
-            'Then type "ls" and hit Enter.'
+            'Type `pwd` and hit Enter to print your directory.',
+            'Type `ls -la` and hit Enter to reveal hidden dotfiles.'
           ],
           objectives: [
             {
@@ -45,36 +52,38 @@ In Linux, you are not clicking icons with a mouse. You interact directly with th
               testArg: 'pwd'
             },
             {
-              id: 'obj-ls',
-              description: 'List current files using `ls`',
-              hint: 'Type `ls` and press Enter.',
+              id: 'obj-ls-la',
+              description: 'Inspect all files including hidden dotfiles using `ls -la`',
+              hint: 'Type `ls -la` and press Enter.',
               testType: 'command_run',
-              testArg: 'ls'
+              testArg: 'ls -la'
             }
           ],
-          solutionCommands: ['pwd', 'ls']
+          solutionCommands: ['pwd', 'ls -la']
         },
         {
           id: 'les-1-2',
           moduleId: 'mod-1',
-          title: 'Mission 2: Reading the Welcome Wiretap (cat)',
-          slug: 'reading-files-cat',
+          title: 'Mission 2: Reading the Incident Dispatch (cat & head)',
+          slug: 'reading-files-cat-head',
           xpReward: 75,
           difficulty: 'Beginner',
           estimatedMinutes: 6,
-          story: 'There is a `welcome.txt` file sitting in your home directory. An informant may have left vital clues inside. Inspect its contents using `cat`.',
-          content: `### Viewing File Contents with \`cat\`
+          story: 'The Chief Information Security Officer left a classified dispatch `welcome.txt` in your home folder. Inspect its contents using `cat`, or use `head` to preview the top lines.',
+          content: `### Inspecting Text Files
 
-The \`cat\` command (short for concatenate) reads one or more files and prints their contents directly to the standard output (\`stdout\`).
+- \`cat <file>\` (**Cat**enate): Reads the file and prints its full content to \`stdout\`.
+- \`cat -n <file>\`: Numbers each line for quick referencing.
+- \`head -n 5 <file>\`: Shows just the first 5 lines of a file.
+- \`tail -n 5 <file>\`: Shows just the last 5 lines.
 
 \`\`\`bash
-cat filename.txt
+cat welcome.txt
+head -n 5 welcome.txt
 \`\`\`
 
-You can also view the first 10 lines with \`head filename.txt\` or the last 10 lines with \`tail filename.txt\`.
-
 ### Your Objectives:
-1. View the contents of \`welcome.txt\` using the \`cat\` command.`,
+1. View the contents of \`welcome.txt\` using \`cat\`.`,
           tips: [
             'Type `cat welcome.txt` in the terminal.'
           ],
@@ -92,27 +101,31 @@ You can also view the first 10 lines with \`head filename.txt\` or the last 10 l
         {
           id: 'les-1-3',
           moduleId: 'mod-1',
-          title: 'Mission 3: Traversal & Hidden Evidence (cd & ls -la)',
-          slug: 'navigation-cd-hidden',
+          title: 'Mission 3: Directory Traversal & Memory (cd, cd .., cd -)',
+          slug: 'navigation-cd-traversal',
           xpReward: 90,
           difficulty: 'Beginner',
           estimatedMinutes: 7,
-          story: 'There is a `notes` directory inside your workspace. Travel into it, inspect what cheatsheets exist, and step back out.',
-          content: `### Navigating Directories with \`cd\`
+          story: 'There is a `notes` directory in your home workspace containing cheatsheets. Travel into it, examine the files, and practice jumping back with `cd -`.',
+          content: `### Navigating the Directory Tree with \`cd\`
 
-- \`cd <dir>\`: Move into a directory (e.g. \`cd notes\`).
+- \`cd <dir>\`: Change into a child directory.
 - \`cd ..\`: Move one level up into the parent directory.
-- \`cd ~\`: Return to your home directory (\`/home/user\`).
-- \`cd -\`: Jump back to your previous directory.
+- \`cd ~\`: Return directly to your home directory (\`/home/user\`).
+- \`cd -\`: Jump back to your previous directory (restores \`$OLDPWD\`).
+
+\`\`\`bash
+cd notes
+ls
+cd ..
+\`\`\`
 
 ### Your Objectives:
-1. Change directory into \`notes\` using \`cd notes\`.
-2. Inspect files in \`notes\` using \`ls\`.
-3. Return back to your home directory using \`cd ..\` or \`cd ~\`.`,
+1. Navigate into the \`notes\` folder using \`cd notes\`.
+2. Step back out to your home directory using \`cd ..\` or \`cd ~\`.`,
           tips: [
-            'First run `cd notes`',
-            'Then run `ls` to see what is inside',
-            'Finally run `cd ..` to go back'
+            'Run `cd notes`',
+            'Then run `cd ..`'
           ],
           objectives: [
             {
@@ -128,60 +141,65 @@ You can also view the first 10 lines with \`head filename.txt\` or the last 10 l
               testArg: 'cd'
             }
           ],
-          solutionCommands: ['cd notes', 'ls', 'cd ..']
+          solutionCommands: ['cd notes', 'cd ..']
         }
       ]
     },
     {
       id: 'mod-2',
-      title: 'Chapter 2: File Creation & Manipulation',
-      description: 'Create folders, craft investigation notes, move files, and clean clutter.',
+      title: 'Chapter 2: File Creation, Redirection & Archiving',
+      description: 'Create folders, craft investigation dossiers with redirection, copy trees, and manage files.',
       icon: 'FileCode2',
       lessons: [
         {
           id: 'les-2-1',
           moduleId: 'mod-2',
-          title: 'Mission 4: Setting Up the War Room (mkdir & touch)',
+          title: 'Mission 4: Setting Up the Investigation Vault (mkdir -p & touch)',
           slug: 'mkdir-and-touch',
           xpReward: 80,
           difficulty: 'Beginner',
           estimatedMinutes: 6,
-          story: 'To organize evidence without contaminating production files, create an `investigation` directory and establish an empty case dossier `dossier.txt`.',
+          story: 'To quarantine evidence, create an `investigation/evidence` nested folder tree using `mkdir -p` and establish an empty evidence dossier file `dossier.txt`.',
           content: `### Creating Directories and Files
 
-- \`mkdir <name>\`: Makes a new directory. With \`-p\`, it creates nested parent folders if they don't exist yet (e.g. \`mkdir -p a/b/c\`).
-- \`touch <name>\`: Updates the timestamp of a file or creates an empty file if it does not exist.
+- \`mkdir -p <path>\`: Creates an entire folder hierarchy in one command without erroring if parents don't exist.
+- \`touch <file>\`: Creates an empty file if it doesn't exist, or updates its timestamp if it does.
+
+\`\`\`bash
+mkdir -p investigation/evidence
+touch investigation/evidence/dossier.txt
+\`\`\`
 
 ### Your Objectives:
-1. Create a directory named \`investigation\`.
-2. Create an empty file named \`investigation/dossier.txt\` (or \`touch dossier.txt\` inside that folder).`,
+1. Create the directory tree \`investigation/evidence\` using \`mkdir -p\`.
+2. Create the file \`investigation/evidence/dossier.txt\` using \`touch\`.`,
           objectives: [
             {
               id: 'obj-mkdir-investigation',
-              description: 'Create directory `investigation`',
-              hint: 'Run `mkdir investigation`',
+              description: 'Create directory hierarchy `investigation/evidence`',
+              hint: 'Run `mkdir -p investigation/evidence`',
               testType: 'dir_exists',
-              testArg: '/home/user/investigation'
+              testArg: '/home/user/investigation/evidence'
             },
             {
               id: 'obj-touch-dossier',
-              description: 'Create file `dossier.txt` inside `investigation/`',
-              hint: 'Run `touch investigation/dossier.txt`',
+              description: 'Create file `dossier.txt` inside `investigation/evidence/`',
+              hint: 'Run `touch investigation/evidence/dossier.txt`',
               testType: 'file_exists',
-              testArg: '/home/user/investigation/dossier.txt'
+              testArg: '/home/user/investigation/evidence/dossier.txt'
             }
           ],
-          solutionCommands: ['mkdir investigation', 'touch investigation/dossier.txt']
+          solutionCommands: ['mkdir -p investigation/evidence', 'touch investigation/evidence/dossier.txt']
         },
         {
           id: 'les-2-2',
           moduleId: 'mod-2',
-          title: 'Mission 5: Writing Case Notes (echo & redirection >)',
+          title: 'Mission 5: Writing Case Telemetry (echo & redirection > / >>)',
           slug: 'echo-and-redirection',
           xpReward: 100,
           difficulty: 'Intermediate',
           estimatedMinutes: 8,
-          story: 'Log suspect telemetry into your dossier. Use `echo` combined with standard output redirection `>` to record "SUSPECT_ID=4299" into `investigation/dossier.txt`.',
+          story: 'Record suspect telemetry into your dossier. Use `echo` combined with standard output redirection `>` to record "BREACH_SECTOR=7" into `investigation/evidence/dossier.txt`.',
           content: `### Standard Output Redirection
 
 In Linux, standard output (\`stdout\`) usually prints to the screen. You can redirect it into a file using:
@@ -190,43 +208,86 @@ In Linux, standard output (\`stdout\`) usually prints to the screen. You can red
 - \`>>\` (Append redirect): Keeps existing text and appends new lines at the bottom.
 
 \`\`\`bash
-echo "SUSPECT_ID=4299" > investigation/dossier.txt
+echo "BREACH_SECTOR=7" > investigation/evidence/dossier.txt
 \`\`\`
 
+You can verify the file contents afterward with \`cat investigation/evidence/dossier.txt\`!
+
 ### Your Objectives:
-1. Write \`SUSPECT_ID=4299\` into \`investigation/dossier.txt\`.`,
+1. Write \`BREACH_SECTOR=7\` into \`investigation/evidence/dossier.txt\`.`,
           objectives: [
             {
               id: 'obj-echo-dossier',
-              description: 'Write "SUSPECT_ID=4299" into `investigation/dossier.txt`',
-              hint: 'Run `echo "SUSPECT_ID=4299" > investigation/dossier.txt`',
+              description: 'Write "BREACH_SECTOR=7" into `investigation/evidence/dossier.txt`',
+              hint: 'Run `echo "BREACH_SECTOR=7" > investigation/evidence/dossier.txt`',
               testType: 'file_content',
-              testArg: '/home/user/investigation/dossier.txt',
-              testExpected: 'SUSPECT_ID=4299'
+              testArg: '/home/user/investigation/evidence/dossier.txt',
+              testExpected: 'BREACH_SECTOR=7'
             }
           ],
-          solutionCommands: ['echo "SUSPECT_ID=4299" > investigation/dossier.txt']
+          solutionCommands: ['echo "BREACH_SECTOR=7" > investigation/evidence/dossier.txt']
+        },
+        {
+          id: 'les-2-3',
+          moduleId: 'mod-2',
+          title: 'Mission 6: Backing Up Artifacts (cp -r & tree)',
+          slug: 'copy-and-tree',
+          xpReward: 110,
+          difficulty: 'Intermediate',
+          estimatedMinutes: 7,
+          story: 'Before tampering with evidence, back up the `notes` folder by copying it recursively to `notes_backup` using `cp -r`. Then visualize your directory hierarchy with `tree`.',
+          content: `### Copying Files and Directories
+
+- \`cp <src> <dest>\`: Copies a single file.
+- \`cp -r <src_dir> <dest_dir>\`: Recursively copies an entire directory and its contents.
+- \`tree\`: Prints a clean visual hierarchy of files and directories.
+
+\`\`\`bash
+cp -r notes notes_backup
+tree
+\`\`\`
+
+### Your Objectives:
+1. Copy \`notes\` to \`notes_backup\` using \`cp -r notes notes_backup\`.
+2. Inspect the structure using \`tree\`.`,
+          objectives: [
+            {
+              id: 'obj-cp-backup',
+              description: 'Create recursive backup `notes_backup` using `cp -r`',
+              hint: 'Run `cp -r notes notes_backup`',
+              testType: 'dir_exists',
+              testArg: '/home/user/notes_backup'
+            },
+            {
+              id: 'obj-run-tree',
+              description: 'Visualize directory tree with `tree`',
+              hint: 'Run `tree` in the terminal.',
+              testType: 'command_run',
+              testArg: 'tree'
+            }
+          ],
+          solutionCommands: ['cp -r notes notes_backup', 'tree']
         }
       ]
     },
     {
       id: 'mod-3',
       title: 'Chapter 3: The Power of Pipes & Filtering (grep, wc, |)',
-      description: 'Intercept system streams, isolate breach signatures, and count anomalies.',
+      description: 'Intercept system streams, isolate breach signatures, count anomalies, and sort data.',
       icon: 'GitCompare',
       lessons: [
         {
           id: 'les-3-1',
           moduleId: 'mod-3',
-          title: 'Mission 6: Hunting the Breach with Grep',
+          title: 'Mission 7: Hunting Intruder Signatures with Grep',
           slug: 'grep-syslog-hunting',
           xpReward: 120,
           difficulty: 'Intermediate',
           estimatedMinutes: 8,
-          story: 'The system log `/var/log/syslog` contains hundreds of events. Filter out all entries with the word "ERROR" to pinpoint the intruder\'s entry point.',
+          story: 'The system log `/var/log/syslog` contains security events. Filter out all entries with the word "ERROR" using `grep` to pinpoint the intruder\'s entry point.',
           content: `### The Power of \`grep\`
 
-\`grep\` (**G**lobally search for a **R**egular **E**xpression and **P**rint) is the primary tool for searching text.
+\`grep\` (**G**lobally search for a **R**egular **E**xpression and **P**rint) is the fundamental tool for searching text in Linux.
 
 \`\`\`bash
 grep "PATTERN" /path/to/file
@@ -236,6 +297,7 @@ Useful flags:
 - \`-i\`: Ignore case sensitivity (matches "error", "ERROR", "Error").
 - \`-v\`: Invert match (show lines that do *not* match).
 - \`-n\`: Show line numbers.
+- \`-c\`: Print only the count of matching lines.
 
 ### Your Objectives:
 1. Search for \`ERROR\` inside \`/var/log/syslog\` using \`grep\`.`,
@@ -253,25 +315,28 @@ Useful flags:
         {
           id: 'les-3-2',
           moduleId: 'mod-3',
-          title: 'Mission 7: Piping and Counting (cat | grep | wc -l)',
+          title: 'Mission 8: Unix Pipelines & Counting (cat | grep | wc -l)',
           slug: 'pipes-and-wordcount',
           xpReward: 130,
           difficulty: 'Intermediate',
           estimatedMinutes: 10,
-          story: 'A true Linux master chains simple commands into powerful pipelines using the pipe operator \`|\`. Chain \`cat /var/log/syslog | grep ERROR\` and count how many error occurrences exist with \`wc -l\`.',
+          story: 'Master the Unix Philosophy by chaining commands together using the pipe operator `|`. Chain `cat /var/log/syslog | grep ERROR` and count the error lines using `wc -l`.',
           content: `### The Unix Philosophy: Pipes (\`|\`)
 
 *"Write programs that do one thing and do it well. Write programs to work together."* — Doug McIlroy
 
-The pipe operator \`|\` takes the standard output (\`stdout\`) of the command on the left and connects it directly as the standard input (\`stdin\`) of the command on the right.
+The pipe operator \`|\` takes the standard output (\`stdout\`) of the command on the left and connects it directly to the standard input (\`stdin\`) of the command on the right.
 
 \`\`\`bash
 cat /var/log/syslog | grep ERROR | wc -l
 \`\`\`
 
+- \`wc -l\`: Counts newline characters (lines).
+- \`wc -w\`: Counts words.
+- \`wc -c\`: Counts bytes.
+
 ### Your Objectives:
-1. Use a pipe to send output from \`cat /var/log/syslog\` into \`grep ERROR\`.
-2. Count the occurrences by chaining \`wc -l\`!`,
+1. Execute a command pipeline containing \`grep\` and \`wc -l\` using the pipe operator \`|\`.`,
           objectives: [
             {
               id: 'obj-pipe-used',
@@ -287,19 +352,19 @@ cat /var/log/syslog | grep ERROR | wc -l
     },
     {
       id: 'mod-4',
-      title: 'Chapter 4: Permissions & Security Hardening',
-      description: 'Demystify octal permissions (rwxr-xr-x), lock down sensitive files with chmod.',
+      title: 'Chapter 4: Permissions, Ownership & Sudo Elevation',
+      description: 'Demystify octal permissions (rwxr-xr-x), chmod, chown, and privilege escalation with sudo.',
       icon: 'ShieldCheck',
       lessons: [
         {
           id: 'les-4-1',
           moduleId: 'mod-4',
-          title: 'Mission 8: Locking Down the Vault (chmod 755 & 600)',
+          title: 'Mission 9: Hardening Script Permissions (chmod 755 & 600)',
           slug: 'file-permissions-chmod',
           xpReward: 150,
           difficulty: 'Advanced',
           estimatedMinutes: 10,
-          story: 'You discovered a mitigation patch script `investigation/patch.sh`. Before running it, make it executable so the security daemon can execute the fix!',
+          story: 'You discovered a mitigation patch script `patch.sh`. Create `patch.sh` and make it executable so the security daemon can execute the fix!',
           content: `### Understanding Linux Permissions
 
 Every Linux file has 3 permission categories:
@@ -314,59 +379,101 @@ With 3 permission types:
 
 For example:
 - \`755\` = \`rwxr-xr-x\` (Owner can read/write/execute; others can read and execute).
-- \`600\` = \`rw-------\` (Owner only; completely private).
+- \`600\` = \`rw-------\` (Owner read/write only; private).
 
 \`\`\`bash
-touch investigation/patch.sh
-chmod 755 investigation/patch.sh
+touch patch.sh
+chmod 755 patch.sh
+ls -l patch.sh
 \`\`\`
 
 ### Your Objectives:
-1. Create \`investigation/patch.sh\` using \`touch\`.
-2. Grant executable permissions to it using \`chmod 755 investigation/patch.sh\` or \`chmod +x investigation/patch.sh\`.`,
+1. Create \`patch.sh\` in your current directory using \`touch patch.sh\`.
+2. Grant executable permissions to it using \`chmod 755 patch.sh\` or \`chmod +x patch.sh\`.`,
           objectives: [
             {
               id: 'obj-touch-patch',
-              description: 'Create file `investigation/patch.sh`',
-              hint: 'Run `touch investigation/patch.sh`',
+              description: 'Create file `patch.sh`',
+              hint: 'Run `touch patch.sh`',
               testType: 'file_exists',
-              testArg: '/home/user/investigation/patch.sh'
+              testArg: '/home/user/patch.sh'
             },
             {
               id: 'obj-chmod-patch',
-              description: 'Set permissions of `investigation/patch.sh` to executable (755)',
-              hint: 'Run `chmod 755 investigation/patch.sh`',
+              description: 'Set permissions of `patch.sh` to executable (755)',
+              hint: 'Run `chmod 755 patch.sh`',
               testType: 'permission_check',
-              testArg: '/home/user/investigation/patch.sh',
+              testArg: '/home/user/patch.sh',
               testExpected: 'rwxr-xr-x'
             }
           ],
-          solutionCommands: ['touch investigation/patch.sh', 'chmod 755 investigation/patch.sh']
+          solutionCommands: ['touch patch.sh', 'chmod 755 patch.sh']
+        },
+        {
+          id: 'les-4-2',
+          moduleId: 'mod-4',
+          title: 'Mission 10: Root Clearance & Sudo Elevation',
+          slug: 'sudo-privilege-elevation',
+          xpReward: 160,
+          difficulty: 'Advanced',
+          estimatedMinutes: 8,
+          story: 'WorldBanc shadow credentials are encrypted inside `/etc/shadow`. Try reading it normally — permission is denied. Elevate your privileges using `sudo` to read `/etc/shadow` or enter root shell mode with `sudo su`!',
+          content: `### Privilege Escalation with \`sudo\`
+
+In Linux, standard users cannot access root-only files like \`/etc/shadow\` or write to system directories like \`/etc\`.
+
+- \`sudo <cmd>\`: Execute a single command with SuperUser (root) privileges.
+- \`sudo su\`: Switch the active session to the \`root\` superuser environment!
+
+\`\`\`bash
+sudo cat /etc/shadow
+sudo su
+whoami
+\`\`\`
+
+### Your Objectives:
+1. Execute a command with \`sudo\` (such as \`sudo cat /etc/shadow\` or \`sudo su\`).`,
+          objectives: [
+            {
+              id: 'obj-sudo-run',
+              description: 'Execute a privileged command using `sudo`',
+              hint: 'Run `sudo cat /etc/shadow` or `sudo su`',
+              testType: 'command_run',
+              testArg: 'sudo'
+            }
+          ],
+          solutionCommands: ['sudo cat /etc/shadow']
         }
       ]
     },
     {
       id: 'mod-5',
-      title: 'Chapter 5: Process Control & Systemd',
-      description: 'Audit running processes with ps, terminate rogue demons, inspect system resources.',
+      title: 'Chapter 5: Process Control, Systemd & Networking',
+      description: 'Audit running processes with ps, terminate rogue daemons with kill, and inspect network sockets.',
       icon: 'Cpu',
       lessons: [
         {
           id: 'les-5-1',
           moduleId: 'mod-5',
-          title: 'Mission 9: Neutralizing Rogue Daemons (ps & kill)',
+          title: 'Mission 11: Neutralizing Rogue Daemons (ps & kill)',
           slug: 'process-control-ps-kill',
           xpReward: 160,
           difficulty: 'Advanced',
           estimatedMinutes: 10,
-          story: 'A compromised background daemon `sshd[4412]` has been brute-forcing credentials. Inspect the active process table with `ps` and terminate the rogue process with `kill 4412`.',
-          content: `### Process Inspection and Termination
+          story: 'A compromised background process with PID `4412` has been brute-forcing SSH credentials. Inspect the active process table with `ps` and terminate the rogue process with `kill 4412`.',
+          content: `### Process Inspection and Signals
 
-Linux runs processes identified by numerical **Process IDs (PIDs)**.
+Linux processes are tracked by numerical **Process IDs (PIDs)**.
 
 - \`ps\`: View active processes in the current shell session.
-- \`kill <PID>\`: Sends the termination signal (\`SIGTERM\`) to terminate a process.
-- \`kill -9 <PID>\`: Sends \`SIGKILL\` to forcefully shut down an unresponsive process.
+- \`ps -ef\` / \`ps aux\`: List every process running across the entire system.
+- \`kill <PID>\`: Sends \`SIGTERM\` (15) to request graceful shutdown.
+- \`kill -9 <PID>\`: Sends \`SIGKILL\` (9) to immediately terminate the process.
+
+\`\`\`bash
+ps
+kill 4412
+\`\`\`
 
 ### Your Objectives:
 1. List running processes with \`ps\`.
@@ -388,6 +495,49 @@ Linux runs processes identified by numerical **Process IDs (PIDs)**.
             }
           ],
           solutionCommands: ['ps', 'kill 4412']
+        },
+        {
+          id: 'les-5-2',
+          moduleId: 'mod-5',
+          title: 'Mission 12: Network Sockets & Systemd (ss & systemctl)',
+          slug: 'networking-and-systemd',
+          xpReward: 180,
+          difficulty: 'Advanced',
+          estimatedMinutes: 10,
+          story: 'Final Mission! Audit open network listening ports on node worldbanc-sec-01 with `ss` and inspect the OpenSSH service status using `systemctl status sshd`.',
+          content: `### Network Auditing & Systemd Services
+
+- \`ss\` (Socket Statistics): The modern replacement for \`netstat\`.
+  - \`ss -tulpn\`: Displays TCP (\`-t\`), UDP (\`-u\`), listening sockets (\`-l\`), with process names (\`-p\`).
+- \`systemctl status <unit>\`: Checks the health, PID, and active state of a systemd daemon.
+- \`ping <host>\`: Sends ICMP echo packets to test network connectivity.
+
+\`\`\`bash
+ss
+systemctl status sshd
+ping -c 2 127.0.0.1
+\`\`\`
+
+### Your Objectives:
+1. Inspect listening network sockets using \`ss\` or \`netstat\`.
+2. Audit the SSH daemon with \`systemctl status sshd\`.`,
+          objectives: [
+            {
+              id: 'obj-ss-check',
+              description: 'Audit network sockets using `ss` or `netstat`',
+              hint: 'Run `ss` in the terminal.',
+              testType: 'command_run',
+              testArg: 'ss'
+            },
+            {
+              id: 'obj-systemctl-check',
+              description: 'Inspect service status with `systemctl status sshd`',
+              hint: 'Run `systemctl status sshd`',
+              testType: 'command_run',
+              testArg: 'systemctl'
+            }
+          ],
+          solutionCommands: ['ss', 'systemctl status sshd']
         }
       ]
     }

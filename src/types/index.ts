@@ -35,7 +35,7 @@ export interface Lesson {
     id: string;
     description: string;
     hint?: string;
-    testType: 'command_run' | 'file_exists' | 'file_content' | 'dir_exists' | 'permission_check' | 'pipe_used' | 'custom';
+    testType: 'command_run' | 'file_exists' | 'file_content' | 'dir_exists' | 'permission_check' | 'pipe_used' | 'user_is' | 'custom';
     testArg?: string;
     testExpected?: string;
   }[];
